@@ -1,24 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sports Event Dashboard</title>
+    <title>Nagpur Zone Sports Dashboard</title>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@500&display=swap' rel='stylesheet'>
     <style>
-        body { font-family: Arial; margin: 20px; }
-        iframe { width: 100%; height: 600px; border: none; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; transition: background-color 0.5s, color 0.5s; }
+        header { background: url('https://images.unsplash.com/photo-1521412644187-c49fa049e84d') no-repeat center center/cover; color: white; text-align: center; padding: 40px; position: relative; }
+        header::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        header img { height: 80px; vertical-align: middle; position: relative; z-index: 2; }
+        header h1 { display: inline-block; margin-left: 15px; font-size: 2.5em; position: relative; z-index: 2; animation: colorChange 5s infinite; }
+        @keyframes colorChange {
+            0% { color: #FF5733; }
+            25% { color: #33FF57; }
+            50% { color: #3357FF; }
+            75% { color: #F1C40F; }
+            100% { color: #FF5733; }
+        }
+        .container { max-width: 1200px; margin: auto; padding: 20px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1.5s ease-in; }
+        h2 { font-family: 'Roboto Slab', serif; color: #007BFF; border-bottom: 2px solid #007BFF; padding-bottom: 5px; animation: colorChange 5s infinite; }
+        iframe { width: 100%; height: 600px; border: none; margin-top: 20px; font-family: 'Roboto Slab', serif; color: #2C3E50; }
+        .attendance { text-align: center; margin-top: 30px; }
+        .attendance a { display: inline-block; padding: 12px 25px; background-color: #28a745; color: white; font-size: 18px; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease, transform 0.3s ease; }
+        .attendance a:hover { background-color: #218838; transform: scale(1.05); }
+        footer { text-align: center; padding: 15px; background-color: #007BFF; color: white; margin-top: 20px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        html { scroll-behavior: smooth; }
+        .countdown, .clock { text-align: center; font-size: 24px; margin: 20px 0; font-weight: 600; }
+        .clock { color: #17a2b8; }
+        .theme-toggle { position: fixed; top: 20px; right: 20px; padding: 10px 15px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .theme-toggle:hover { background: #0056b3; }
+        .dates-list p { font-size: 18px; }
+        .highlight { background-color: #ffeeba; padding: 5px; border-radius: 5px; }
+        .dark-mode { background-color: #121212; color: #f4f4f4; }
+        .dark-mode .container { background-color: #1e1e1e; }
+        .dark-mode footer { background-color: #333; }
+        @media (max-width: 768px) {
+            iframe { height: 400px; }
+            header h1 { font-size: 1.5em; }
+        }
     </style>
 </head>
 <body>
-    <h1>Sports Event Dashboard</h1>
-    <h2>Event Details</h2>
-    <p>Location: Main Stadium</p>
-    <p>Date: TBD</p>
-    <p>Sports: Cricket, Badminton, Table_Tennis, Breeze, Running_100m, Running_400m, Running_800m, Running_1500m, Long_Jump, Javelin_Throw, Shot_Put, Discus_Throw, Carrom, Chess, Wrestling_50kg, Wrestling_80kg</p>
+    <button class="theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sports_icon.png/600px-Sports_icon.png" alt="Sports Logo">
+        <h1>Nagpur Zone Sports</h1>
+    </header>
+    <div class="container">
+        <div class="clock" id="clock">Loading time...</div>
+        <h2>Event Details</h2>
+        <p><strong>Location:</strong> Vibhagiy Krida Sankul, Koradi Sport Complex, Police Takli Ground</p>
+        <div class="dates-list">
+            <p><strong>Dates:</strong></p>
+            <p id="date1">07.01.2026</p>
+            <p id="date2">08.01.2026</p>
+            <p id="date3">09.01.2026</p>
+        </div>
 
-    <h2>Live Scoreboard</h2>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQQEZTGjHIBUb16iior25AabwLUIsKr-g8kA7OkFrmNEnBfsASKxZC3o2iMoqX_1Upyp94ftfIgggMH/pubhtml?widget=true&headers=false"></iframe>
+        <div class="countdown" id="countdown">Countdown loading...</div>
 
-    <h2>Attendance</h2>
-    <p><a href='https://docs.google.com/forms/d/e/1FAIpQLScPUPzlEh7M6HOZ2HJngJtCyZrrXxiAUYn7-XF5UOrofI9pxA/viewform?usp=header' target='_blank'>Mark Attendance Here</a></p>
-    <img src='../attendance/attendance_qr.png' alt='Attendance QR Code' width='200'>
+        <h2>Live Scoreboard</h2>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQQEZTGjHIBUb16iior25AabwLUIsKr-g8kA7OkFrmNEnBfsASKxZC3o2iMoqX_1Upyp94ftfIgggMH/pubhtml?widget=true&headers=false"></iframe>
+
+        <div class="attendance">
+            <h2>Attendance</h2>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScPUPzlEh7M6HOZ2HJngJtCyZrrXxiAUYn7-XF5UOrofI9pxA/viewform?usp=header" target="_blank">Mark Attendance Here</a>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 Nagpur Zone Sports | Designed for Dynamic Experience</p>
+    </footer>
+
+    <script>
+        // Live Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+
+        // Countdown Timer
+        const eventDate = new Date('2026-01-07T00:00:00').getTime();
+        const countdownEl = document.getElementById('countdown');
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            if (distance < 0) {
+                countdownEl.innerHTML = 'Event Started!';
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s remaining`;
+            }
+        }, 1000);
+
+        // Highlight current date dynamically
+        const today = new Date().toLocaleDateString('en-GB');
+        ['date1','date2','date3'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el.innerText === today) {
+                el.classList.add('highlight');
+            }
+        });
+
+        // Theme Switcher
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>
+<img src="attendance_qr.png" alt="Attendance QR Code" style="width:200px;height:200px;">
